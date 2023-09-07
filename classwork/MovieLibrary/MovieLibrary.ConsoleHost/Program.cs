@@ -23,52 +23,111 @@ void GetMovie ()
     title = ReadString("Enter a title: ", true);
     description = ReadString("Enter a description: ", false);
 
-    //TODO: Fix length
     length = ReadInt("Enter the run length (in mins): ", 0);
     releaseYear = ReadInt("Enter the release year: ", 1900);
-}
 
+    genre = ReadString("Enter a genre: ", false);
+    rating = ReadString("Enter a rating: ", false);
+
+    isBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
+}
 void DisplayMovie ()
 {
+    Console.WriteLine();
+    Console.WriteLine("--------------");
+
     Console.WriteLine(title);
+
+    //Run Length: ## mins
+    Console.WriteLine("Run Length: " + length + " mins");
+
+    //Released yyyy
+    Console.WriteLine("Released " + releaseYear);
+
+    Console.WriteLine(genre);
+
+    //MPAA Rating: 
+    Console.WriteLine("MPAA Rating: " + rating);
+
+    //Black and White? 
+    // Conditional: Eb ? Et : Ef
+    //string format = "Color";
+    //if (isBlackAndWhite)
+    //    format = "Black and White";
+
+    //V2
+    string format = isBlackAndWhite ? "Black and White" : "Color";
+    Console.WriteLine("Format: " + format);
+
+    //V3
+    //Console.WriteLine("Format: " + (isBlackAndWhite ? "Black and White" : "Color"));
+
     Console.WriteLine(description);
-    Console.WriteLine(length);
+}
+bool ReadBoolean ( string message )
+{
+    Console.WriteLine(message);
+
+    //Handle errors
+    while (true)
+    {
+        //string value = Console.ReadLine();
+        var value = Console.ReadLine();
+        if (value == "Y" || value == "y")
+            return true;
+        else if (value == "N" || value == "n")  // value == "N" || "n"
+            return false;
+
+        Console.WriteLine("Please enter Y/N");
+
+        ////Stops current iteration, exits loop
+        //if (false)
+        //    break;
+
+        ////Stops current iteration, loops around and tries again
+        //if (false)
+        //    continue;
+    };
 }
 
 int ReadInt ( string message, int minimumValue )
 {
     Console.WriteLine(message);
 
-    string value = Console.ReadLine();
-    //NOT SAFE
-    //int result = Int32.Parse(value);
-    int result;
-    if (Int32.TryParse(value, out result))
-        if (result >= minimumValue)
-            return result;
-    //TODO: Input validation
-    return 0;
+    do
+    {
+        string value = Console.ReadLine();
 
+        //NOT SAFE
+        //int result = Int32.Parse(value);
+        //int result;
+        //if (Int32.TryParse(value, out result))
+        if (Int32.TryParse(value, out var result))
+            if (result >= minimumValue)
+                return result;
+
+        Console.WriteLine("Value must be at least " + minimumValue);
+    } while (true);
 }
 string ReadString ( string message, bool isRequired )
 {
     Console.WriteLine(message);
-    string value = Console.ReadLine();
 
-    if (!isRequired)
-        return value;
-    //else
-    //    return "";
-    //return Console.ReadLine();
-    //TODO: Input validation for required
-    return value;
-    //if (false)
-    //{
-    //    if (true)
-    //        Console.WriteLine();
+    do
+    {
+        string value = Console.ReadLine();
 
-    //} else
+        if (!isRequired || value != "")
+            return value;
+        //if (!isRequired)
+        //    return value;
 
+        ////Is it empty?
+        //if (value != "")
+        //    return value;
+
+        Console.WriteLine("Value is required");
+    } while (true);
 }
 //double someFloatingValue = 3.14159;
 //char letterGrade = 'A';
