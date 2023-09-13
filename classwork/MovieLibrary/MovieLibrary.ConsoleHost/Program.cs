@@ -116,40 +116,58 @@ void EditMovie ()
 
 void DeleteMovie ()
 {
-    if (!Confirm("Are you sure you want to delete the movie (Y/N)?"))
+    if (String.IsNullOrEmpty(title))
+        return; 
+
+    if (!Confirm($"Are you sure you want to delete the movie '{title}' (Y/N)?"))
         return;
 
-    Console.WriteLine("Not implemented yet.");
+    title = "";
 }
 
+//Display the movie details
 void ViewMovie ()
 {
+    if (String.IsNullOrEmpty(title))
+    {
+        //Length of a string
+        int len = title.Length;
+        Console.WriteLine("No movies available");
+        return;
+    };
+
     //Console.WriteLine();
     //Console.WriteLine("--------------");
-    Console.WriteLine("\n--------------");
-    //Escape characters
-    // \n - New Line. must start with \ and is always lowercase
-    // \t - tab. cannot control how many spaces this creates. determined by terminal
-    // \" - "
-    // \' - '
-    // \\ - \
-    // @ - ignores escape sequence
-    string filePath = "C:\\windows\\temp";
-    filePath = @"C:\windows\temp"; //verbatim string
-
+    //Console.WriteLine("\n--------------");
+    Console.WriteLine("".PadLeft(15, '-'));
 
     Console.WriteLine(title);
 
+    //String formatting
     //Run Length: ## mins
-    Console.WriteLine("Run Length: " + length + " mins");
+    //Console.WriteLine("Run Length: " + length + " mins");
+    // 1. Concat
+    //Console.WriteLine("Run Length: " + length.ToString() + " mins");
+    //var message = String.
+    // 2. String Format
+    //string message = String.Format("Run Length: {0} mins", length);
+    //Console.WriteLine(message);
+    //decimal price = 45.45252;
+    //String.Format("{0:C}, price"); //$45.45"
+    //Console.WriteLine("Run Length: {0} mins", length);
+    // 3. String interpolation
+    string message = $"Run Length {length} mins";
+    Console.WriteLine(message);
 
     //Released yyyy
-    Console.WriteLine("Released " + releaseYear);
+    //Console.WriteLine("Released " + releaseYear);
+    Console.WriteLine($"Released {releaseYear}");
 
     Console.WriteLine(genre);
 
     //MPAA Rating: 
-    Console.WriteLine("MPAA Rating: " + rating);
+    //Console.WriteLine("MPAA Rating: " + rating);
+    Console.WriteLine($"MPAA RAting: {rating}");
 
     //Black and White? 
     // Conditional: Eb ? Et : Ef
@@ -165,6 +183,16 @@ void ViewMovie ()
     //Console.WriteLine("Format: " + (isBlackAndWhite ? "Black and White" : "Color"));
 
     Console.WriteLine(description);
+
+    //More String functions
+    //string path1 = @"C:\temp";
+    //string path2 = @"Windows";
+    //if (!path1.EndsWith("\\"))
+    //    path1 = path1 + "\\";
+    //if (path2.StartsWith("\\"))
+    //    path2 = path2.Substring(1);
+    //    path2 = path2.Trim('\\');
+    //string path3 = path1 + "\\" + path2
 }
 
 bool Confirm ( string message)
@@ -236,7 +264,7 @@ string ReadString ( string message, bool isRequired )
 
     do
     {
-        string value = Console.ReadLine();
+        string value = Console.ReadLine().Trim();
 
         if (!isRequired || !String.IsNullOrEmpty(value))
             return value;
@@ -258,13 +286,24 @@ string ReadRating ( string message )
     do
     {
         string value = Console.ReadLine();
-        if (value == "PG")
+
+        //if (value == "PG") 
+        //1. String compare 1 -> Do Not Use 
+        //if (value.ToUpper() == "PG")
+        //if (value.ToLower() == "pg")
+        //value = value.ToLower();
+        //if (value == "pg")
+        //2. String compare 2 -> fine
+        //if (String.Compare(value, "PG", true) == 0) //String.Compare(value, "PG", StringComparison.CurrentCultureIgnoreCase)
+        //if (value.CompareTo("PG") == 0)
+        //3. String Equals -> PREFERRED
+        if (String.Equals(value, "PG", StringComparison.CurrentCultureIgnoreCase))
             return "PG";
-        else if (value == "G")
+        else if (String.Equals(value, "G", StringComparison.CurrentCultureIgnoreCase))
             return "G";
-        else if (value == "PG-13")
+        else if (String.Equals(value, "PG-13", StringComparison.CurrentCultureIgnoreCase))
             return "PG-13";
-        else if (value == "R")
+        else if (String.Equals(value, "R", StringComparison.CurrentCultureIgnoreCase))
             return "R";
         //else if (value == "") // else if (value == String.Empty)
         //else if (value == "" || value == null) **Inefficient Don't use
@@ -274,9 +313,9 @@ string ReadRating ( string message )
         Console.WriteLine("Invalid rating");
     } while (true);
 
-    string emptyValue;
-    var areEqual = "" == String.Empty; //true
-    areEqual = "" == null; //false
+    //string emptyValue;
+    //var areEqual = "" == String.Empty; //true
+    //areEqual = "" == null; //false
 }
 
 //Ways to represent an empty string
