@@ -4,7 +4,7 @@
  * Alexander Ban
  * Lab One
  */
-ReadIntroduction();
+//ReadIntroduction();
 
 var quit = false;
 //string command;
