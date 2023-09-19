@@ -17,7 +17,11 @@ do
         case "S": command = "S"; break;
         case "E": command = "E"; break;
         case "W": command = "W"; break;
-        case "Q": command = "Q"; break;
+        case "Q":
+        {
+            if (ConfirmAction())
+                quit = true; break;
+        };
         //{
         //    quit = true;
         //    break;
@@ -56,3 +60,20 @@ string GetAction ()
         };
     } while (true);
 }
+bool ConfirmAction()
+{
+    Console.WriteLine ("Are you sure? Y/N");
+    while (true)
+    {
+        switch (Console.ReadKey(true).Key)
+        {
+            case ConsoleKey.Y: return true;
+
+            case ConsoleKey.N: return false;
+
+            default: Console.WriteLine("Please enter Y/N"); break;
+        };
+    };
+
+}
+
