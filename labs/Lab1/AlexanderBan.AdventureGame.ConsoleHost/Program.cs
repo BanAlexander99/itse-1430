@@ -203,7 +203,7 @@ static int GeneratePercentage()
 }
 static void SeeShadows ()
 {
-    Console.WriteLine("As you open the door, a flicker of movement draws your eye.\nA shadowy figure exits the room through a different door silently.")
+    Console.WriteLine("As you open the door, a flicker of movement draws your eye.\nA shadowy figure exits the room through a different door silently.");
 }
 ///Room Design
 ///1 2 3
