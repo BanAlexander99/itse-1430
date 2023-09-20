@@ -72,18 +72,30 @@ Movie AddMovie ()
 {
     var movie = new Movie();
 
-    movie.title = ReadString("Enter a title: ", true);
-    movie.description = ReadString("Enter a description: ", false);
+    do
+    {
 
-    movie.length = ReadInt("Enter the run length (in mins): ", 0);
-    movie.releaseYear = ReadInt("Enter the release year: ", 1900);
 
-    movie.genre = ReadString("Enter a genre: ", false);
-    movie.rating = ReadRating("Enter a rating: ");
 
-    movie.isBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
+        movie.title = ReadString("Enter a title: ", true);
+        movie.description = ReadString("Enter a description: ", false);
 
-    return movie;
+        movie.length = ReadInt("Enter the run length (in mins): ", 0);
+        movie.releaseYear = ReadInt("Enter the release year: ", 1900);
+
+        movie.genre = ReadString("Enter a genre: ", false);
+        movie.rating = ReadRating("Enter a rating: ");
+
+        movie.isBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
+
+        //Validate
+        var error = movie.Validate();
+        if (String.IsNullOrEmpty(error))
+            return movie;
+
+        Console.WriteLine($"ERROR: {error}");
+    } while (true);
+
 }
 
 void EditMovie ()
@@ -108,6 +120,8 @@ bool DeleteMovie ( Movie movie)
 void ViewMovie ( Movie movie )
 {
     if (String.IsNullOrEmpty(movie.title))
+
+        //movie.DownloadMetadata();
     {
         //Length of a string
         int len = movie.title.Length;
@@ -144,12 +158,15 @@ void ViewMovie ( Movie movie )
 
     
 }
-
+///<summary></summary>
 bool Confirm ( string message)
 {
     return ReadBoolean(message);
 }
-
+/// <summary>
+/// Reads a boolean value.</summary>
+/// <param name="message">Message to show.</param>
+/// <returns>Returns true if the value was true or false otherwise.</returns>
 bool ReadBoolean ( string message )
 {
     Console.WriteLine(message);
