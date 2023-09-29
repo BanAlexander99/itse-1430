@@ -6,25 +6,22 @@
     /// </remarks>
     public class Movie
     {
-        //Properties - field like syntax with method functionality
-        //  property_defn ::= full_property | auto_property
-        //
-        //  full_property ::= [mods] T id { [ getter ] [ setter ] }
-        //  getter ::= get { S* }  
-        //  setter ::= set { S* }  
-        //
-        //  auto_property ::= [mods] T id { [ get; ] [ set; ] } [ = Et ;]
+        //Fields - data
 
-        /// <summary>Gets or sets the unique identifier of the movie.</summary>
-        public int Id
-        {
-            //Mixed accessibility - getter/setter has different access than property
-            get;
-            /*set;*/
-            private set;
-        }
+        private string _title;
+        private string _description;
+        private string _genre;
+        private string _rating;
 
-        /// <summary>Gets or sets the title of movie.</summary>
+        //Full property syntax
+        //private int _length;
+        //private int _releaseYear = 1900;
+        //private bool _isBlackAndWhite;
+
+
+        //Properties - data with functionality
+
+        /// <summary>Title of movie.</summary>
         public string Title
         {
             //string get()
@@ -44,126 +41,106 @@
             }
         }
 
-        /// <summary>Gets or sets the optional description.</summary>
+        /// <summary>Description of movie.</summary>
         public string Description
         {
             get {
                 if (String.IsNullOrEmpty(_description))
                     return "";
-
                 return _description;
             }
-            set { _description = value; }
+            set {
+                _description = value;
+            }
         }
 
-        /// <summary>Gets or sets the genre.</summary>
+        /// <summary>Genre of movie.</summary>
         public string Genre
         {
             get {
                 if (String.IsNullOrEmpty(_genre))
                     return "";
-
                 return _genre;
             }
-            set { _genre = value; }
+            set {
+                _genre = value;
+            }
         }
 
-        /// <summary>Gets or sets the MPAA rating.</summary>
-        //public string Rating
+        /// <summary>Rating of movie.</summary>
+        public string Rating
+        {
+            get {
+                if (String.IsNullOrEmpty(_rating))
+                    return "";
+                return _rating;
+            }
+            set {
+                _rating = value;
+            }
+        }
+
+        /// <summary>Movie runtime (in minutes).</summary>
+        //Full property syntax
+        //public int RunLength
         //{
-        //    get 
-        //    {
-        //        if (String.IsNullOrEmpty(_rating))
-        //            return ""; 
-
-        //        return _rating; 
-        //    }
-        //    set { _rating = value; }
+        //    get { return _length; }
+        //    set { _length = value; }
         //}
-        public Rating Rating { get; set; }
-
-        /// <summary>Gets or sets the run length.</summary>
-        /// <value>Must be at least zero.</value>
         public int RunLength { get; set; }
 
-        //private int _releaseYear = 1900;
+        /// <summary>Movie release year.</summary>
         //public int ReleaseYear
         //{
         //    get { return _releaseYear; }
-        //    set { _releaseYear = value; }
+        //    set {
+        //        _releaseYear = value;
+        //    }
         //}
-
-        /// <summary>Gets or sets the release year.</summary>
-        /// <value>Must be at least 1900.</value>
-        public int ReleaseYear { get; set; } = MinimumReleaseYear;
-
-        //private bool _isBlackAndWhite;
+        public int ReleaseYear { get; set; } = 1900;
+        /// <summary>Is the movie in black and white?</summary>
         //public bool IsBlackAndWhite
         //{
         //    get { return _isBlackAndWhite; }
         //    set { _isBlackAndWhite = value; }
         //}
-
-        /// <summary>Determines if the movie is black and white or color.</summary>
         public bool IsBlackAndWhite { get; set; }
-
-        //Calculated property
-        /// <summary>Determines if the movie needs an intermission.</summary>
-        /// <value>Any movie that is at least 2 and a half hours needs an intermission.</value>
+        
         public bool NeedsIntermission
         {
             //Runlength > 150
             get { return RunLength >= 150; }
-            //set { }  //Optional
+            //set { }
         }
-
-        //Fields - data        
-
-        /// <summary>Minimum release year.</summary>
-        public const int MinimumReleaseYear = 1900;
-
-        //Const - compile time constant, must recompile to change
-        //Readonly - runtime constant, do not recompile to change
-        //public const string DefaultRating = "PG";
-        public readonly string DefaultRating = "PG";
-
-        //  field_defn ::= [mods] T id [ = Et ];
-        private string _title;
-        private string _description = "";
-        private string _genre = "";
-        private string _rating = "";
-
-        //Methods - functionality
-
-        /// <summary>Download metadata from Internet.</summary>
+        //Methods - functions
+        /// <summary>
+        /// Download metadata from Internet.
+        /// </summary>
         /// <remarks>
         /// Searches IMDB and TheTVDB.com.
         /// </remarks>
         private void DownloadMetadata ()
         { }
-
-        /// <summary>Validates the movie instance.</summary>
+        /// <summary>
+        /// Validates the movie instance.
+        /// </summary>
         /// <returns>Error message if invalid or empty string otherwise.</returns>
         public string Validate () /* Movie this */
         {
-            //var title = "";
-
             //Title is required
             //if (String.IsNullOrEmpty(this.title))
             if (String.IsNullOrEmpty(_title))
                 return "Title is required";
 
-            //var releaseYear = 10;
+
+            //error;
 
             //Release Year >= 1900
-            //if (this.releaseYear < 1900)
-            if (ReleaseYear < MinimumReleaseYear)
-                return $"Release Year must be >= {MinimumReleaseYear}";
-
+            if (ReleaseYear < 1900)
+                return "Release Year must be >= 1900";
             //Length >= 0
-            if (RunLength < 0)
+            if (RunLength <0)
                 return "Length must be at least 0";
-
             //TODO: Rating is in a list
 
             //If ReleaseYear < 1940 then IsBlackAndWhite must be true
@@ -173,5 +150,6 @@
             //Valid
             return "";
         }
+
     }
 }
