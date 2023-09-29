@@ -103,7 +103,8 @@ partial class Program
             //movie.NeedsIntermission = true;
 
             //Validate
-            var error = movie.Validate();   //Validate(movie)
+            ValidatableObject validInstance = movie;
+            var error = validInstance.Validate();   //Validate(movie)
             if (String.IsNullOrEmpty(error))
                 return movie;
 

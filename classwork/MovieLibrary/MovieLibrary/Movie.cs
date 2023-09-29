@@ -4,7 +4,7 @@
     /// <remarks>
     /// Additional remarks to help when using the class.
     /// </remarks>
-    public class Movie
+    public class Movie : ValidatableObject
     {
         //Fields - data
 
@@ -12,16 +12,47 @@
         private string _description;
         private string _genre;
         private string _rating;
+        private bool _initialized;
+        //Default constructor
+        public Movie ()
+        {
+            _initialized = true;
+        }
+        /// <summary>
+        ///  Initializes the Movie Class
+        /// </summary>
+        /// <param name="id">Identifier of the movie.</param>"
+        public Movie ( int id ) : this(id, "")
+        {
+            //Initialize(id, "");
+        }
+
+        public Movie ( string title ) : this(0, title)
+        {
+            //Initialize(0, title);
+        }
+        public Movie ( int id, string title ) : this()
+        {
+
+            //Initialize(id, title);
+            ID = id;
+            Title = title;
+        }
 
         //Full property syntax
         //private int _length;
         //private int _releaseYear = 1900;
         //private bool _isBlackAndWhite;
 
-
         //Properties - data with functionality
 
         /// <summary>Title of movie.</summary>
+
+        public int ID
+        {
+            get;
+            private set;
+        }
         public string Title
         {
             //string get()
@@ -105,7 +136,7 @@
         //    set { _isBlackAndWhite = value; }
         //}
         public bool IsBlackAndWhite { get; set; }
-        
+
         public bool NeedsIntermission
         {
             //Runlength > 150
@@ -120,36 +151,54 @@
         /// Searches IMDB and TheTVDB.com.
         /// </remarks>
         private void DownloadMetadata ()
-        { }
+        {
+            //Initialize(0, "");
+        }
+
         /// <summary>
         /// Validates the movie instance.
         /// </summary>
         /// <returns>Error message if invalid or empty string otherwise.</returns>
-        public string Validate () /* Movie this */
+        public override bool TryValidate ( out string message ) /* Movie this */
         {
             //Title is required
             //if (String.IsNullOrEmpty(this.title))
             if (String.IsNullOrEmpty(_title))
-                return "Title is required";
+            {
 
-
+                message =  "Title is required";
+                return false;
+            }
             //error;
 
             //Release Year >= 1900
             if (ReleaseYear < 1900)
-                return "Release Year must be >= 1900";
+            {
+
+                message = "Release Year must be >= 1900";
+                return false;
+            }
             //Length >= 0
             if (RunLength <0)
-                return "Length must be at least 0";
+            {
+                message = "Length must be at least 0";
+                return false;
+            }
             //TODO: Rating is in a list
 
             //If ReleaseYear < 1940 then IsBlackAndWhite must be true
             if (ReleaseYear < 1940 && !IsBlackAndWhite)
-                return "Movies before 1940 must be black and white";
+            {
+                message = "Movies before 1940 must be black and white";
+                return false;
+            }
 
             //Valid
-            return "";
+            message = "";
+            return true;
         }
+
+
 
     }
 }
