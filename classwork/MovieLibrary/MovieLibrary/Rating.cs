@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieLibrary
+﻿namespace MovieLibrary
 {
     /// <summary>Represents an MPAA rating.</summary>
     public class Rating

@@ -1,18 +1,9 @@
-﻿//  Movie Data:
-//  Title, genre, description, MPAA rating
-//  Length, Release year, budget
-//  IsBlackAndWhite
-//  Operations: Add, edit, view, delete
-
-
-/*
+﻿/*
 * ITSE 1430
 * Fall 2023
 * 
 * Sample movie library
 */
-using System.ComponentModel.Design;
-
 using MovieLibrary;
 
 namespace MovieLibrary.ConsoleHost;
@@ -85,6 +76,9 @@ partial class Program
     Movie AddMovie ()
     {
         var movie = new Movie();
+        //var movie = new Movie(10, "Something");
+        //movie.Title = "Something";
+        //movie.Description = "Something";
 
         do
         {
@@ -104,6 +98,7 @@ partial class Program
 
             //Validate
             ValidatableObject validInstance = movie;
+            //validInstance.Only
             var error = validInstance.Validate();   //Validate(movie)
             if (String.IsNullOrEmpty(error))
                 return movie;
@@ -262,19 +257,3 @@ partial class Program
         } while (true);
     }
 }
-//Ways to represent an empty string
-/// 1. ""
-/// 2. String.Empty
-/// 3. unassigned string variable is given special value null **NIGHTMARE**
-/// null != empty
-//double someFloatingValue = 3.14159;
-//char letterGrade = 'A';
-
-//{
-//    int hours = 5;
-//    //int title = 54;
-//    title = "Jaws";
-
-//    Console.WriteLine(title);
-//    Console.WriteLine(length);
-//}
