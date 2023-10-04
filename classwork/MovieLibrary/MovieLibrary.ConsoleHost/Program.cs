@@ -19,7 +19,7 @@ partial class Program
     void Run ()
     {
         //TODO: Remove this
-        Movie movie = new Movie();
+        Movie movie = null; //new Movie();
 
         //Entry point
         var done = false;
@@ -114,7 +114,8 @@ partial class Program
 
     bool DeleteMovie ( Movie movie )
     {
-        if (String.IsNullOrEmpty(movie.Title))
+        //if (String.IsNullOrEmpty(movie.Title))
+        if (movie == null)
             return false;
 
         if (!Confirm($"Are you sure you want to delete the movie '{movie.Title}' (Y/N)?"))
@@ -128,12 +129,14 @@ partial class Program
     //Display the movie details
     void ViewMovie ( Movie movie )
     {
-        if (String.IsNullOrEmpty(movie.Title))
+        //if (String.IsNullOrEmpty(movie.Title))
+        if (movie == null)
         {
             Console.WriteLine("No movies available");
             return;
         };
 
+        //var len = movie?.RunLength;
         //movie.DownloadMetadata();    
 
         Console.WriteLine();
@@ -256,4 +259,40 @@ partial class Program
             Console.WriteLine("Value is required");
         } while (true);
     }
+    void Display ( object value )
+    {
+        //If a string call ToString
+        //If an int call ToString() with min 2 digits
+        //if a float call ToString() with 2 digits precision
+        //if bool then print Yes or No
+        //Otherwise ToString()
+
+        //Type checking/casting
+        // 1. is_expression ::= E is T (boolean)
+        // Cast 2. c_style ::= (T)E
+        // 3. as_expression :: E at T (T)
+        // 4. pattern_matching ::=
+
+        if (value is string)
+        {
+            //Is a string
+            //var valueString = (string)value;
+            var valueString = value as string;
+            if (valueString != null)
+            {
+                Console.WriteLine(valueString);
+            };
+                        
+
+            //string x = "Hello";
+            //int y = (int)x;
+        };
+
+        //if (value is int)
+        //{
+        //    int y = (iny)value;
+        //}
+        //var intValue = value as int;
+    }
 }
+
